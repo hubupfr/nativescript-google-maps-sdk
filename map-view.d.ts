@@ -31,7 +31,9 @@ declare module "nativescript-google-maps-sdk" {
 
         public updateCamera(): void;
 
-        public updatePadding(): void;
+        public updatePadding(): void
+
+        public animateCamera(cameraUpdateLiteral: any, callback : any): void;
 
         public static mapReadyEvent: string;
         public static markerSelectEvent: string;

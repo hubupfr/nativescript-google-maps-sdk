@@ -82,6 +82,38 @@ export class MapView extends MapViewCommon {
         this.gMap.moveCamera(cameraUpdate);
     }
 
+    animateCamera(cameraUpdateLiteral, callback = null) {
+        var cpBuilder = new com.google.android.gms.maps.model.CameraPosition.Builder();
+        var update = false;
+
+        if (!isNaN(cameraUpdateLiteral.latitude) && !isNaN(cameraUpdateLiteral.longitude)) {
+            update = true;
+            cpBuilder.target(new com.google.android.gms.maps.model.LatLng(cameraUpdateLiteral.latitude, cameraUpdateLiteral.longitude));
+        }
+
+        if (!isNaN(cameraUpdateLiteral.bearing)) {
+            update = true;
+            cpBuilder.bearing(cameraUpdateLiteral.bearing);
+        }
+
+        if (!isNaN(cameraUpdateLiteral.zoom)) {
+            update = true;
+            cpBuilder.zoom(cameraUpdateLiteral.zoom);
+        }
+
+        if (!isNaN(cameraUpdateLiteral.tilt)) {
+            update = true;
+            cpBuilder.tilt(cameraUpdateLiteral.tilt);
+        }
+        
+        var cameraUpdate =  com.google.android.gms.maps.CameraUpdateFactory.newCameraPosition(cpBuilder.build());
+        if(callback != null) {
+            this.gMap.animateCamera(cameraUpdate, callback);
+        } else {
+            this.gMap.animateCamera(cameraUpdate);
+        }
+    }
+
     updatePadding() {
         if (this.padding && this.gMap) {
             this.gMap.setPadding(this.padding[0] || 0, this.padding[1] || 0, this.padding[2] || 0, this.padding[3] || 0);
